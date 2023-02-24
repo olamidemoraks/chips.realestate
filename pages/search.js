@@ -8,8 +8,8 @@ import Property from "../component/Property";
 import noresult from "../assets/images/noresult.svg";
 import { fetchApi, baseUrl } from "../utils/fetchApi";
 
-const search = ({ properties }) => {
-  const [searchFilter, setSearchFilter] = useState("false");
+const Search = ({ properties }) => {
+  const [searchFilter, setSearchFilter] = useState(false);
   const router = useRouter();
   console.log(router.query);
   return (
@@ -38,26 +38,25 @@ const search = ({ properties }) => {
           <Property property={property} />
         ))}
       </Flex>
-      {properties?.length === 0 ||
-        (properties == undefined && (
-          <Flex
-            justifyContent={"center"}
-            alignItems="center"
-            flexDirection={"column"}
-            margin="5"
-            marginBottom={"5"}
-          >
-            <Image alt="no result" src={noresult} />
-            <Text fontSize={"2xl"} marginTop="3">
-              No Results Found
-            </Text>
-          </Flex>
-        ))}
+      {(properties?.length === 0 || properties == undefined) && (
+        <Flex
+          justifyContent={"center"}
+          alignItems="center"
+          flexDirection={"column"}
+          margin="5"
+          marginBottom={"5"}
+        >
+          <Image alt="no result" src={noresult} />
+          <Text fontSize={"2xl"} marginTop="3">
+            No Results Found
+          </Text>
+        </Flex>
+      )}
     </Box>
   );
 };
 
-export default search;
+export default Search;
 
 export async function getServerSideProps({ query }) {
   const purpose = query.purpose || "for-rent";
